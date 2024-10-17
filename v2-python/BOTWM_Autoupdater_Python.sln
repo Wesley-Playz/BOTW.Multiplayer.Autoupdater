@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "BOTWM_Autoupdater_Python", "BOTWM_Autoupdater_Python\BOTWM_Autoupdater_Python.pyproj", "{2DB9A5E6-5018-4C33-8ED7-9E18F2AB6C58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DB9A5E6-5018-4C33-8ED7-9E18F2AB6C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB9A5E6-5018-4C33-8ED7-9E18F2AB6C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1A88A71-DD02-4F1D-8389-27C0375F9B2F}
+	EndGlobalSection
+EndGlobal
