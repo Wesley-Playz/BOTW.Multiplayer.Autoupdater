@@ -13,6 +13,7 @@ v2: Allows you to choose between the latest and any version available
 v2-python: v2 remade in Python
 
 v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download)
+Also alerts you (when you open the program) if there is a new version available and allows you to download it.
 
 The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
