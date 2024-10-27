@@ -6,13 +6,13 @@ Just download one of the releases and run the exe in an empty folder.
 
 If you download the Python version you need to have Python installed on your system to run it.
 
-v1: Downloads the latest release
+v1: Downloads the latest release.
 
-v2: Allows you to choose between the latest and any version available
+v2: Allows you to choose between the latest and any version available.
 
-v2-python: v2 remade in Python
+v2-python: v2 remade in Python.
 
-v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download); Also alerts you (when you open the program) if there is a new version available and allows you to download it.
+v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download). Also alerts you (when you open the program) if there is a new version available and allows you to download it.
 
 The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
