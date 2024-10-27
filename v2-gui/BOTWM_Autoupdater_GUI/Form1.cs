@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BotWMultiplayerUpdaterGUI
 {
@@ -68,6 +69,7 @@ namespace BotWMultiplayerUpdaterGUI
                 ExtractRelease();
                 labelStatus.Text = $"Updated to version: {selectedVersion}";
                 UpdateCurrentVersion(selectedVersion);
+                ShowCompletionIndicator(); // Show completion indicator
             }
             catch (Exception ex)
             {
@@ -83,7 +85,7 @@ namespace BotWMultiplayerUpdaterGUI
             }
         }
 
-        private async System.Threading.Tasks.Task<List<string>> GetAvailableVersions()
+        private async Task<List<string>> GetAvailableVersions()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -151,7 +153,7 @@ namespace BotWMultiplayerUpdaterGUI
             }
         }
 
-        private async System.Threading.Tasks.Task DownloadLatestRelease(string version)
+        private async Task DownloadLatestRelease(string version)
         {
             string downloadUrl = $"https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release/releases/download/{version}/{version}.zip";
             using (HttpClient client = new HttpClient())
@@ -210,6 +212,15 @@ namespace BotWMultiplayerUpdaterGUI
                 }
             }
             File.Delete(zipPath);
+        }
+
+        // Show completion indicator after update
+        private async void ShowCompletionIndicator()
+        {
+            labelStatus.Text = "Download Complete!";
+            progressBarDownload.Value = 100; // Set progress bar to full
+            await Task.Delay(3000); // Wait for 3 seconds
+            progressBarDownload.Value = 0; // Reset progress bar
         }
 
         // Auto-update check feature
