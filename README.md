@@ -1,6 +1,6 @@
 # BotW.Multiplayer.Autoupdater
 
-An open source fixed version of the BotW Multiplayer Autoupdater.
+An open source and improved version of the classic BotW Multiplayer Autoupdater.
 
 Just download one of the releases and run the exe in an empty folder.
 
@@ -14,8 +14,6 @@ v2-python: v2 remade in Python
 
 v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download)
 
-‎ 
-‎ 
 The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
 Watch this video to get BotW Multiplayer set up and working: https://www.youtube.com/watch?v=j18yicimeiM
