@@ -26,4 +26,5 @@ Note: You WILL NEED the Newtonsoft.Json (all versions), and Costura.Fody (all ve
 
 If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
 There is a "forked by *insert name here*" in the code for a reason. Just use it.
+
 If you edit the v2-gui source code and release it publicly you need to give credit to me (just add *forked by ____* in the textbox in the designer).
