@@ -6,9 +6,13 @@ Just download one of the releases and run the exe in an empty folder.
 
 If you download the Python version you need to have Python installed on your system to run it.
 
-v1 Downloads the latest release
+v1: Downloads the latest release
 
-v2 Allows you to choose between the latest and any version available
+v2: Allows you to choose between the latest and any version available
+
+v2-python: v2 remade in Python
+
+v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download)
 
 It downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
@@ -20,3 +24,4 @@ Note: You WILL NEED the Newtonsoft.Json, and Costura.Fody NuGet packages in orde
 
 If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
 There is a "forked by *insert name here*" in the code for a reason. Just use it.
+If you edit the v2-gui source code and release it publicly you need to give credit to me (just add *forked by ____* in the textbox in the designer).
