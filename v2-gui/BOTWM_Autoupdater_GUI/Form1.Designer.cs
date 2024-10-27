@@ -27,7 +27,7 @@
             listBoxVersions.BorderStyle = BorderStyle.FixedSingle;
             listBoxVersions.FormattingEnabled = true;
             listBoxVersions.ItemHeight = 30;
-            listBoxVersions.Location = new Point(139, 122);
+            listBoxVersions.Location = new Point(139, 151);
             listBoxVersions.Margin = new Padding(6, 7, 6, 7);
             listBoxVersions.Name = "listBoxVersions";
             listBoxVersions.Size = new Size(439, 212);
@@ -35,7 +35,7 @@
             // 
             // buttonDownload
             // 
-            buttonDownload.Location = new Point(1, 348);
+            buttonDownload.Location = new Point(1, 377);
             buttonDownload.Margin = new Padding(6, 7, 6, 7);
             buttonDownload.Name = "buttonDownload";
             buttonDownload.Size = new Size(717, 53);
@@ -47,7 +47,8 @@
             // labelStatus
             // 
             labelStatus.AutoSize = true;
-            labelStatus.Location = new Point(243, 559);
+            labelStatus.Dock = DockStyle.Bottom;
+            labelStatus.Location = new Point(0, 568);
             labelStatus.Margin = new Padding(6, 0, 6, 0);
             labelStatus.Name = "labelStatus";
             labelStatus.Size = new Size(0, 30);
@@ -59,7 +60,7 @@
             textBox1.Location = new Point(1, 0);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(717, 131);
+            textBox1.Size = new Size(717, 141);
             textBox1.TabIndex = 3;
             textBox1.Text = resources.GetString("textBox1.Text");
             textBox1.TextAlign = HorizontalAlignment.Center;
