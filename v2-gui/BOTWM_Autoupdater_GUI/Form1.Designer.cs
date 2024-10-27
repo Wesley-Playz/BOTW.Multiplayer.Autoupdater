@@ -20,6 +20,7 @@
             buttonDownload = new Button();
             labelStatus = new Label();
             textBox1 = new TextBox();
+            progressBarDownload = new ProgressBar();
             SuspendLayout();
             // 
             // listBoxVersions
@@ -65,12 +66,20 @@
             textBox1.Text = resources.GetString("textBox1.Text");
             textBox1.TextAlign = HorizontalAlignment.Center;
             // 
+            // progressBarDownload
+            // 
+            progressBarDownload.Location = new Point(326, 572);
+            progressBarDownload.Name = "progressBarDownload";
+            progressBarDownload.Size = new Size(395, 26);
+            progressBarDownload.TabIndex = 4;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(721, 598);
+            Controls.Add(progressBarDownload);
             Controls.Add(textBox1);
             Controls.Add(labelStatus);
             Controls.Add(buttonDownload);
@@ -87,5 +96,6 @@
         private System.Windows.Forms.Button buttonDownload;
         private Label labelStatus;
         private TextBox textBox1;
+        private ProgressBar progressBarDownload;
     }
 }

@@ -20,6 +20,7 @@ namespace BotWMultiplayerUpdaterGUI
         {
             InitializeComponent();
             LoadVersions();
+            AutoCheckForUpdates();
         }
 
         private async void LoadVersions()
@@ -56,6 +57,8 @@ namespace BotWMultiplayerUpdaterGUI
                 return;
             }
 
+            // Disable the button while the update is in progress
+            buttonDownload.Enabled = false;
             labelStatus.Text = $"Downloading version: {selectedVersion}...";
             DeleteFilesExceptUpdater();
 
@@ -69,6 +72,14 @@ namespace BotWMultiplayerUpdaterGUI
             catch (Exception ex)
             {
                 labelStatus.Text = "Error during download or extraction: " + ex.Message;
+            }
+            finally
+            {
+                // Re-enable the button after the update process finishes or errors out
+                buttonDownload.Enabled = true;
+
+                // Reset the progress bar once everything is done
+                progressBarDownload.Value = 0;
             }
         }
 
@@ -145,11 +156,32 @@ namespace BotWMultiplayerUpdaterGUI
             string downloadUrl = $"https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release/releases/download/{version}/{version}.zip";
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync(downloadUrl);
+                HttpResponseMessage response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
-                byte[] data = await response.Content.ReadAsByteArrayAsync();
+
+                long totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                byte[] buffer = new byte[8192];
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), releaseZipFile);
-                await File.WriteAllBytesAsync(filePath, data);
+
+                // Download the file with progress tracking
+                using (var contentStream = await response.Content.ReadAsStreamAsync())
+                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                {
+                    long totalRead = 0L;
+                    int bytesRead;
+                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        totalRead += bytesRead;
+
+                        if (totalBytes > 0)
+                        {
+                            // Calculate progress and update the progress bar
+                            int progress = (int)((totalRead * 100L) / totalBytes);
+                            progressBarDownload.Value = progress;
+                        }
+                    }
+                }
             }
         }
 
@@ -178,6 +210,47 @@ namespace BotWMultiplayerUpdaterGUI
                 }
             }
             File.Delete(zipPath);
+        }
+
+        // Auto-update check feature
+        private async void AutoCheckForUpdates()
+        {
+            try
+            {
+                var availableVersions = await GetAvailableVersions();
+                string latestVersion = availableVersions.FirstOrDefault();
+                string currentVersion = GetCurrentVersion();
+
+                if (string.IsNullOrEmpty(currentVersion))
+                {
+                    labelStatus.Text = "Current version not found.";
+                    return;
+                }
+
+                if (new Version(latestVersion).CompareTo(new Version(currentVersion)) > 0)
+                {
+                    var result = MessageBox.Show(
+                        $"A new version ({latestVersion}) is available. Do you want to update now?",
+                        "Update Available",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        listBoxVersions.SelectedItem = latestVersion;
+                        buttonDownload_Click(this, EventArgs.Empty);  // Trigger the download
+                    }
+                }
+                else
+                {
+                    labelStatus.Text = "You are using the latest version.";
+                }
+            }
+            catch (Exception ex)
+            {
+                labelStatus.Text = "Error checking for updates: " + ex.Message;
+            }
         }
     }
 }
