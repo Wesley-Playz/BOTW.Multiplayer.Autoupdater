@@ -14,7 +14,9 @@ v2-python: v2 remade in Python
 
 v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download)
 
-It downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
+‎ 
+‎ 
+The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
 Watch this video to get BotW Multiplayer set up and working: https://www.youtube.com/watch?v=j18yicimeiM
 
