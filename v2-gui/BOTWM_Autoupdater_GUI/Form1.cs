@@ -15,64 +15,6 @@ namespace BotWMultiplayerUpdaterGUI
         private static readonly string releaseZipFile = "latest_release.zip";
         private static readonly string versionFileName = "Version.txt";
         private static readonly string updaterFileName = "BOTWM_Autoupdater_GUI.exe";
-        private static readonly HashSet<string> allowedFiles = new HashSet<string>
-        {
-            //Current Versions
-			"BOTWM_Autoupdater.exe",
-            "Breath of the Wild Multiplayer.deps.json",
-            "Breath of the Wild Multiplayer.dll",
-            "Breath of the Wild Multiplayer.exe",
-            "Breath of the Wild Multiplayer.runtimeconfig.json",
-            "Newtonsoft.Json.dll",
-            "Version.txt",
-            //Linux
-            "BOTWM_Autoupdater",
-			//Old Version
-			".gitignore",
-            "BOTW Multiplayer.exe",
-            "BOTW Multiplayer.exe.config",
-            "BOTW.DedicatedServer.deps.json",
-            "BOTW.DedicatedServer.dll",
-            "BOTW.DedicatedServer.exe",
-            "BOTW.DedicatedServer.runtimeconfig.json",
-            "BOTWM.Server.dll",
-            "BOTWMUpdater.py",
-            "Gamemodes.json",
-            "Microsoft.Bcl.AsyncInterfaces.dll",
-            "Microsoft.Bcl.AsyncInterfaces.xml",
-            "Newtonsoft.Json.dll",
-            "System.Buffers.dll",
-            "System.Buffers.xml",
-            "System.Memory.dll",
-            "System.Memory.xml",
-            "System.Numerics.Vectors.dll",
-            "System.Numerics.Vectors.xml",
-            "System.Runtime.CompilerServices.Unsafe.dll",
-            "System.Runtime.CompilerServices.Unsafe.xml",
-            "System.Text.Encodings.Web.dll",
-            "System.Text.Encodings.Web.xml",
-            "System.Text.Json.dll",
-            "System.Text.Json.xml",
-            "System.Threading.Tasks.Extensions.dll",
-            "System.Threading.Tasks.Extensions.xml",
-            "System.ValueTuple.dll",
-            "System.ValueTuple.xml",
-            "TeleportScript.py",
-            "version.txt"
-        };
-
-        private static readonly HashSet<string> allowedFolders = new HashSet<string>
-        {
-            //Current Versions
-			"Backgrounds",
-            "BNPs",
-            "DedicatedServer",
-			//Current and Old Versions
-			"Resources",
-			//Old Version
-			"BCML Files",
-            "libs"
-        };
 
         public Form1()
         {
@@ -105,13 +47,15 @@ namespace BotWMultiplayerUpdaterGUI
                 return;
             }
 
-            if (ContainsOtherFilesOrFolders())
+            string selectedVersion = listBoxVersions.SelectedItem.ToString();
+            string currentVersion = GetCurrentVersion();
+
+            if (selectedVersion == currentVersion)
             {
-                labelStatus.Text = "Other files or folders detected. The updater will not run.";
+                labelStatus.Text = "The mod is already up-to-date.";
                 return;
             }
 
-            string selectedVersion = listBoxVersions.SelectedItem.ToString();
             labelStatus.Text = $"Downloading version: {selectedVersion}...";
             DeleteFilesExceptUpdater();
 
@@ -120,6 +64,7 @@ namespace BotWMultiplayerUpdaterGUI
                 await DownloadLatestRelease(selectedVersion);
                 ExtractRelease();
                 labelStatus.Text = $"Updated to version: {selectedVersion}";
+                UpdateCurrentVersion(selectedVersion);
             }
             catch (Exception ex)
             {
@@ -140,35 +85,57 @@ namespace BotWMultiplayerUpdaterGUI
             }
         }
 
-        private bool ContainsOtherFilesOrFolders()
+        private string GetCurrentVersion()
         {
-            string folderPath = Directory.GetCurrentDirectory();
-            DirectoryInfo directory = new DirectoryInfo(folderPath);
+            string versionFilePath = Path.Combine(Directory.GetCurrentDirectory(), versionFileName);
 
-            var otherFiles = directory.GetFiles().Where(file => !allowedFiles.Contains(file.Name)).ToList();
-            var otherFolders = directory.GetDirectories().Where(dir => !allowedFolders.Contains(dir.Name)).ToList();
+            if (!File.Exists(versionFilePath))
+            {
+                return string.Empty;
+            }
 
-            return otherFiles.Count > 0 || otherFolders.Count > 0;
+            return File.ReadAllText(versionFilePath).Trim();
+        }
+
+        private void UpdateCurrentVersion(string version)
+        {
+            string versionFilePath = Path.Combine(Directory.GetCurrentDirectory(), versionFileName);
+            File.WriteAllText(versionFilePath, version);
         }
 
         private void DeleteFilesExceptUpdater()
         {
+            labelStatus.Text = "Deleting old files...";
             string folderPath = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(folderPath);
 
             foreach (FileInfo file in directory.GetFiles())
             {
-                if (!allowedFiles.Contains(file.Name))
+                // Force delete all files except the updater file
+                if (!file.Name.Equals(updaterFileName, StringComparison.OrdinalIgnoreCase))
                 {
-                    file.Delete();
+                    try
+                    {
+                        file.Attributes = FileAttributes.Normal;  // Ensure file is not read-only
+                        file.Delete();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error deleting file: {file.Name}. {ex.Message}", "Deletion Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
 
             foreach (DirectoryInfo dir in directory.GetDirectories())
             {
-                if (!allowedFolders.Contains(dir.Name))
+                try
                 {
+                    // Force delete all directories
                     dir.Delete(true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting folder: {dir.Name}. {ex.Message}", "Deletion Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
