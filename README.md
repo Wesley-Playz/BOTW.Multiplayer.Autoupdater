@@ -18,7 +18,7 @@ It downloads the files from this repository: https://gitea.30-seven.cc/Wesley/Bo
 
 Watch this video to get BotW Multiplayer set up and working: https://www.youtube.com/watch?v=j18yicimeiM
 
-If you want to build the program yourself I would recommend editing the files in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: *dotnet publish -r win-x64 --self-contained -p:PublishSingleFile=true -c Release*
+If you want to build v1, v2, or v2-python yourself I would recommend editing the files in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: *dotnet publish -r win-x64 --self-contained -p:PublishSingleFile=true -c Release*
 
 If you want to build v2-gui yourself I would recommend editing the program in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: *dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeAllContentForSelfExtract=true*
 
