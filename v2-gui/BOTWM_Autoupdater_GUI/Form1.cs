@@ -23,6 +23,66 @@ namespace BotWMultiplayerUpdaterGUI
 
         private CheckBox darkModeCheckbox;
 
+        // Allowed files and folders
+        private readonly List<string> allowedFilesAndFolders = new List<string>
+        {
+            //Files
+            //Current Versions
+			"BOTWM_Autoupdater.exe",
+            "BOTWM_Autoupdater_GUI.exe",
+            "Breath of the Wild Multiplayer.deps.json",
+            "Breath of the Wild Multiplayer.dll",
+            "Breath of the Wild Multiplayer.exe",
+            "Breath of the Wild Multiplayer.runtimeconfig.json",
+            "Newtonsoft.Json.dll",
+            "Version.txt",
+            //Linux
+            "BOTWM_Autoupdater",
+			//Old Version
+			".gitignore",
+            "BOTW Multiplayer.exe",
+            "BOTW Multiplayer.exe.config",
+            "BOTW.DedicatedServer.deps.json",
+            "BOTW.DedicatedServer.dll",
+            "BOTW.DedicatedServer.exe",
+            "BOTW.DedicatedServer.runtimeconfig.json",
+            "BOTWM.Server.dll",
+            "BOTWMUpdater.py",
+            "Gamemodes.json",
+            "Microsoft.Bcl.AsyncInterfaces.dll",
+            "Microsoft.Bcl.AsyncInterfaces.xml",
+            "Newtonsoft.Json.dll",
+            "System.Buffers.dll",
+            "System.Buffers.xml",
+            "System.Memory.dll",
+            "System.Memory.xml",
+            "System.Numerics.Vectors.dll",
+            "System.Numerics.Vectors.xml",
+            "System.Runtime.CompilerServices.Unsafe.dll",
+            "System.Runtime.CompilerServices.Unsafe.xml",
+            "System.Text.Encodings.Web.dll",
+            "System.Text.Encodings.Web.xml",
+            "System.Text.Json.dll",
+            "System.Text.Json.xml",
+            "System.Threading.Tasks.Extensions.dll",
+            "System.Threading.Tasks.Extensions.xml",
+            "System.ValueTuple.dll",
+            "System.ValueTuple.xml",
+            "TeleportScript.py",
+            "version.txt",
+            //Folders
+            //Current Versions
+			"Backgrounds",
+            "BNPs",
+            "DedicatedServer",
+			//Current and Old Versions
+			"Resources",
+			//Old Version
+			"BCML Files",
+            "libs"
+
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -128,6 +188,13 @@ namespace BotWMultiplayerUpdaterGUI
             if (selectedVersion == currentVersion)
             {
                 labelStatus.Text = "The mod is already up-to-date.";
+                return;
+            }
+
+            // Check for disallowed files or folders
+            if (!CheckAllowedFilesAndFolders())
+            {
+                labelStatus.Text = "The current directory contains disallowed files or folders.";
                 return;
             }
 
@@ -267,63 +334,68 @@ namespace BotWMultiplayerUpdaterGUI
                     string destinationPath = Path.Combine(extractPath, entry.FullName);
                     if (entry.FullName.EndsWith("/"))
                     {
-                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                        // Directory entry
+                        Directory.CreateDirectory(destinationPath);
                     }
                     else
                     {
-                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                        // File entry
                         entry.ExtractToFile(destinationPath, true);
                     }
                 }
             }
-            File.Delete(zipPath);
+            File.Delete(zipPath); // Clean up zip file after extraction
         }
 
-        private async void ShowCompletionIndicator()
+        private bool CheckAllowedFilesAndFolders()
         {
-            labelStatus.Text = "Download Complete!";
-            progressBarDownload.Value = 100;
-            await Task.Delay(3000);
-            progressBarDownload.Value = 0;
+            var existingFilesAndFolders = Directory.GetFiles(Directory.GetCurrentDirectory()).Select(Path.GetFileName).Concat(Directory.GetDirectories(Directory.GetCurrentDirectory()).Select(Path.GetFileName));
+
+            return existingFilesAndFolders.All(item => allowedFilesAndFolders.Contains(item));
+        }
+
+        private void ShowCompletionIndicator()
+        {
+            labelStatus.Text = "Download completed.";
+            MessageBox.Show("The update process is complete!", "Update Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private async void AutoCheckForUpdates()
         {
             try
             {
+                // Load the latest versions
                 var availableVersions = await GetAvailableVersions();
-                string latestVersion = availableVersions.FirstOrDefault();
                 string currentVersion = GetCurrentVersion();
 
-                if (string.IsNullOrEmpty(currentVersion))
+                if (availableVersions.Count > 0)
                 {
-                    labelStatus.Text = "Current version not found.";
-                    return;
-                }
+                    string latestVersion = availableVersions.First();
 
-                if (new Version(latestVersion).CompareTo(new Version(currentVersion)) > 0)
-                {
-                    var result = MessageBox.Show(
-                        $"A new version ({latestVersion}) is available. Do you want to update now?",
-                        "Update Available",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Information
-                    );
-
-                    if (result == DialogResult.Yes)
+                    // Compare versions
+                    if (new Version(latestVersion) > new Version(currentVersion))
                     {
-                        listBoxVersions.SelectedItem = latestVersion;
-                        buttonDownload_Click(this, EventArgs.Empty);
+                        // Notify the user about the new version
+                        var result = MessageBox.Show(
+                            $"A new version {latestVersion} is available. Would you like to update?",
+                            "New Version Available",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            // You can call the download logic here if you want to initiate the update directly
+                            await DownloadLatestRelease(latestVersion);
+                            ExtractRelease();
+                            UpdateCurrentVersion(latestVersion);
+                            ShowCompletionIndicator();
+                        }
                     }
-                }
-                else
-                {
-                    labelStatus.Text = "You are using the latest version.";
                 }
             }
             catch (Exception ex)
             {
-                labelStatus.Text = "Error checking for updates: " + ex.Message;
+                MessageBox.Show("Error checking for updates: " + ex.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
