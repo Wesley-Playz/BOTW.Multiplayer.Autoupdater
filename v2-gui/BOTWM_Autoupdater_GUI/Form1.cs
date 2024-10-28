@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing; // Required for color handling
 
 namespace BotWMultiplayerUpdaterGUI
 {
@@ -17,11 +18,83 @@ namespace BotWMultiplayerUpdaterGUI
         private static readonly string versionFileName = "Version.txt";
         private static readonly string updaterFileName = "BOTWM_Autoupdater_GUI.exe";
 
+        // Dark mode flag
+        private bool isDarkMode = false;
+
+        private CheckBox darkModeCheckbox;
+
         public Form1()
         {
             InitializeComponent();
+            this.ClientSize = new Size(721, 598); // Adjust the size as needed
+            this.FormBorderStyle = FormBorderStyle.FixedSingle; // Prevent resizing
+            this.MaximizeBox = false; // Disable the maximize button
             LoadVersions();
             AutoCheckForUpdates();
+
+            // Create dark mode toggle checkbox
+            darkModeCheckbox = new CheckBox
+            {
+                Text = "Dark Mode",
+                Location = new Point(2, -5), // Top left corner
+                AutoSize = true
+            };
+            darkModeCheckbox.CheckedChanged += DarkModeCheckbox_CheckedChanged; // Add event handler
+            this.Controls.Add(darkModeCheckbox); // Add checkbox to the form
+
+            // Set the checkbox on top of textBox1
+            this.Controls.SetChildIndex(darkModeCheckbox, 0); // Ensure it's on top
+        }
+
+        // Event handler for dark mode toggle
+        private void DarkModeCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+            isDarkMode = checkbox.Checked;
+            ApplyTheme(); // Apply the selected theme
+        }
+
+        // Method to apply dark or light theme
+        private void ApplyTheme()
+        {
+            if (isDarkMode)
+            {
+                // Set dark theme colors
+                this.BackColor = Color.FromArgb(30, 30, 30);
+                labelStatus.ForeColor = Color.White;
+                listBoxVersions.BackColor = Color.FromArgb(45, 45, 48);
+                listBoxVersions.ForeColor = Color.White;
+                buttonDownload.BackColor = Color.FromArgb(51, 51, 55);
+                buttonDownload.ForeColor = Color.White;
+                progressBarDownload.BackColor = Color.FromArgb(51, 51, 55);
+
+                // Dark theme for textBox1
+                textBox1.BackColor = Color.FromArgb(30, 30, 30);
+                textBox1.ForeColor = Color.White;
+
+                // Dark mode checkbox colors
+                darkModeCheckbox.BackColor = Color.FromArgb(30, 30, 30);
+                darkModeCheckbox.ForeColor = Color.White;
+            }
+            else
+            {
+                // Set light theme colors
+                this.BackColor = Color.White;
+                labelStatus.ForeColor = Color.Black;
+                listBoxVersions.BackColor = Color.White;
+                listBoxVersions.ForeColor = Color.Black;
+                buttonDownload.BackColor = Color.LightGray;
+                buttonDownload.ForeColor = Color.Black;
+                progressBarDownload.BackColor = Color.LightGray;
+
+                // Light theme for textBox1
+                textBox1.BackColor = Color.White;
+                textBox1.ForeColor = Color.Black;
+
+                // Light mode checkbox colors
+                darkModeCheckbox.BackColor = Color.White;
+                darkModeCheckbox.ForeColor = Color.Black;
+            }
         }
 
         private async void LoadVersions()
@@ -58,7 +131,6 @@ namespace BotWMultiplayerUpdaterGUI
                 return;
             }
 
-            // Disable the button while the update is in progress
             buttonDownload.Enabled = false;
             labelStatus.Text = $"Downloading version: {selectedVersion}...";
             DeleteFilesExceptUpdater();
@@ -69,7 +141,7 @@ namespace BotWMultiplayerUpdaterGUI
                 ExtractRelease();
                 labelStatus.Text = $"Updated to version: {selectedVersion}";
                 UpdateCurrentVersion(selectedVersion);
-                ShowCompletionIndicator(); // Show completion indicator
+                ShowCompletionIndicator();
             }
             catch (Exception ex)
             {
@@ -77,10 +149,7 @@ namespace BotWMultiplayerUpdaterGUI
             }
             finally
             {
-                // Re-enable the button after the update process finishes or errors out
                 buttonDownload.Enabled = true;
-
-                // Reset the progress bar once everything is done
                 progressBarDownload.Value = 0;
             }
         }
@@ -124,12 +193,11 @@ namespace BotWMultiplayerUpdaterGUI
 
             foreach (FileInfo file in directory.GetFiles())
             {
-                // Force delete all files except the updater file
                 if (!file.Name.Equals(updaterFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     try
                     {
-                        file.Attributes = FileAttributes.Normal;  // Ensure file is not read-only
+                        file.Attributes = FileAttributes.Normal;
                         file.Delete();
                     }
                     catch (Exception ex)
@@ -143,7 +211,6 @@ namespace BotWMultiplayerUpdaterGUI
             {
                 try
                 {
-                    // Force delete all directories
                     dir.Delete(true);
                 }
                 catch (Exception ex)
@@ -165,7 +232,6 @@ namespace BotWMultiplayerUpdaterGUI
                 byte[] buffer = new byte[8192];
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), releaseZipFile);
 
-                // Download the file with progress tracking
                 using (var contentStream = await response.Content.ReadAsStreamAsync())
                 using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
                 {
@@ -178,7 +244,6 @@ namespace BotWMultiplayerUpdaterGUI
 
                         if (totalBytes > 0)
                         {
-                            // Calculate progress and update the progress bar
                             int progress = (int)((totalRead * 100L) / totalBytes);
                             progressBarDownload.Value = progress;
                         }
@@ -214,16 +279,14 @@ namespace BotWMultiplayerUpdaterGUI
             File.Delete(zipPath);
         }
 
-        // Show completion indicator after update
         private async void ShowCompletionIndicator()
         {
             labelStatus.Text = "Download Complete!";
-            progressBarDownload.Value = 100; // Set progress bar to full
-            await Task.Delay(3000); // Wait for 3 seconds
-            progressBarDownload.Value = 0; // Reset progress bar
+            progressBarDownload.Value = 100;
+            await Task.Delay(3000);
+            progressBarDownload.Value = 0;
         }
 
-        // Auto-update check feature
         private async void AutoCheckForUpdates()
         {
             try
@@ -250,7 +313,7 @@ namespace BotWMultiplayerUpdaterGUI
                     if (result == DialogResult.Yes)
                     {
                         listBoxVersions.SelectedItem = latestVersion;
-                        buttonDownload_Click(this, EventArgs.Empty);  // Trigger the download
+                        buttonDownload_Click(this, EventArgs.Empty);
                     }
                 }
                 else

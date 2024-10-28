@@ -39,7 +39,7 @@
             buttonDownload.Location = new Point(1, 377);
             buttonDownload.Margin = new Padding(6, 7, 6, 7);
             buttonDownload.Name = "buttonDownload";
-            buttonDownload.Size = new Size(717, 53);
+            buttonDownload.Size = new Size(720, 53);
             buttonDownload.TabIndex = 1;
             buttonDownload.Text = "Download";
             buttonDownload.UseVisualStyleBackColor = true;
@@ -80,10 +80,10 @@
             BackColor = Color.White;
             ClientSize = new Size(721, 598);
             Controls.Add(progressBarDownload);
-            Controls.Add(textBox1);
             Controls.Add(labelStatus);
             Controls.Add(buttonDownload);
             Controls.Add(listBoxVersions);
+            Controls.Add(textBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(6, 7, 6, 7);
             Name = "Form1";
