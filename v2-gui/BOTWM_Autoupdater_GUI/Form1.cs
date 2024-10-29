@@ -102,8 +102,43 @@ namespace BotWMultiplayerUpdaterGUI
             darkModeCheckbox.CheckedChanged += DarkModeCheckbox_CheckedChanged; // Add event handler
             this.Controls.Add(darkModeCheckbox); // Add checkbox to the form
 
+            // Add button to run exe and exit
+            Button runExeButton = new Button
+            {
+                Text = "Start BOTW Multiplayer",
+                Location = new Point(218, 460), // Set an appropriate location
+                Size = new Size(262, 66) // Set the button size as needed
+            };
+            runExeButton.Click += RunExeButton_Click; // Attach the click event handler
+            this.Controls.Add(runExeButton); // Add the button to the form
+
             // Set the checkbox on top of textBox1
             this.Controls.SetChildIndex(darkModeCheckbox, 0); // Ensure it's on top
+        }
+
+        // Event handler for the run EXE button
+        private void RunExeButton_Click(object sender, EventArgs e)
+        {
+            string exeFileName = "Breath of the Wild Multiplayer.exe"; // Replace with the actual executable file name
+            string exeFilePath = Path.Combine(Directory.GetCurrentDirectory(), exeFileName);
+
+            if (File.Exists(exeFilePath))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(exeFilePath); // Start the executable
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to start {exeFileName}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Executable not found: {exeFileName}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            this.Close(); // Close the application
         }
 
         // Event handler for dark mode toggle
@@ -194,7 +229,8 @@ namespace BotWMultiplayerUpdaterGUI
             // Check for disallowed files or folders
             if (!CheckAllowedFilesAndFolders())
             {
-                labelStatus.Text = "The current directory contains disallowed files or folders.";
+                labelStatus.Text = "The program will not run.";
+                MessageBox.Show("The current directory contains disallowed files or folders.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -240,11 +276,12 @@ namespace BotWMultiplayerUpdaterGUI
 
             if (!File.Exists(versionFilePath))
             {
-                return string.Empty;
+                return "0.0.0"; // Return a default version
             }
 
             return File.ReadAllText(versionFilePath).Trim();
         }
+
 
         private void UpdateCurrentVersion(string version)
         {
@@ -385,6 +422,14 @@ namespace BotWMultiplayerUpdaterGUI
                         if (result == DialogResult.Yes)
                         {
                             // You can call the download logic here if you want to initiate the update directly
+                            if (!CheckAllowedFilesAndFolders())
+                            {
+                                labelStatus.Text = "The program will not run.";
+                                MessageBox.Show("The current directory contains disallowed files or folders.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
+
+                            DeleteFilesExceptUpdater();
                             await DownloadLatestRelease(latestVersion);
                             ExtractRelease();
                             UpdateCurrentVersion(latestVersion);
