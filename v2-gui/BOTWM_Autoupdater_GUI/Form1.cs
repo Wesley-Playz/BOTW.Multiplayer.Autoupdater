@@ -109,7 +109,7 @@ namespace BotWMultiplayerUpdaterGUI
                 Location = new Point(218, 460), // Set an appropriate location
                 Size = new Size(262, 66) // Set the button size as needed
             };
-            runExeButton.Click += RunExeButton_Click; // Attach the click event handler
+            runExeButton.Click += runExeButton_Click; // Attach the click event handler
             this.Controls.Add(runExeButton); // Add the button to the form
 
             // Set the checkbox on top of textBox1
@@ -117,7 +117,7 @@ namespace BotWMultiplayerUpdaterGUI
         }
 
         // Event handler for the run EXE button
-        private void RunExeButton_Click(object sender, EventArgs e)
+        private void runExeButton_Click(object sender, EventArgs e)
         {
             string exeFileName = "Breath of the Wild Multiplayer.exe"; // Replace with the actual executable file name
             string exeFilePath = Path.Combine(Directory.GetCurrentDirectory(), exeFileName);
@@ -127,6 +127,7 @@ namespace BotWMultiplayerUpdaterGUI
                 try
                 {
                     System.Diagnostics.Process.Start(exeFilePath); // Start the executable
+                    this.Close(); // Close the application only if the exe starts successfully
                 }
                 catch (Exception ex)
                 {
@@ -137,8 +138,6 @@ namespace BotWMultiplayerUpdaterGUI
             {
                 MessageBox.Show($"Executable not found: {exeFileName}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.Close(); // Close the application
         }
 
         // Event handler for dark mode toggle
@@ -163,9 +162,11 @@ namespace BotWMultiplayerUpdaterGUI
                 buttonDownload.ForeColor = Color.White;
                 progressBarDownload.BackColor = Color.FromArgb(51, 51, 55);
 
-                // Dark theme for textBox1
+                // Dark theme for textBox1 and textBox2
                 textBox1.BackColor = Color.FromArgb(30, 30, 30);
                 textBox1.ForeColor = Color.White;
+                textBox2.BackColor = Color.FromArgb(30, 30, 30);
+                textBox2.ForeColor = Color.White;
 
                 // Dark mode checkbox colors
                 darkModeCheckbox.BackColor = Color.FromArgb(30, 30, 30);
@@ -182,9 +183,11 @@ namespace BotWMultiplayerUpdaterGUI
                 buttonDownload.ForeColor = Color.Black;
                 progressBarDownload.BackColor = Color.LightGray;
 
-                // Light theme for textBox1
+                // Light theme for textBox1 and textBox2
                 textBox1.BackColor = Color.White;
                 textBox1.ForeColor = Color.Black;
+                textBox2.BackColor = Color.White;
+                textBox2.ForeColor = Color.Black;
 
                 // Light mode checkbox colors
                 darkModeCheckbox.BackColor = Color.White;

@@ -21,6 +21,7 @@
             labelStatus = new Label();
             textBox1 = new TextBox();
             progressBarDownload = new ProgressBar();
+            textBox2 = new TextBox();
             SuspendLayout();
             // 
             // listBoxVersions
@@ -63,7 +64,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(717, 141);
             textBox1.TabIndex = 3;
-            textBox1.Text = resources.GetString("textBox1.Text");
+            textBox1.Text = "\r\nBuilt from the ground up Wesley Hellewell released on Oct 11th 2024\r\nThis auto updater will prepare the mod installation for you\r\nPlease do not close this installer until it is done";
             textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // progressBarDownload
@@ -73,12 +74,22 @@
             progressBarDownload.Size = new Size(395, 26);
             progressBarDownload.TabIndex = 4;
             // 
+            // textBox2
+            // 
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Location = new Point(150, 2);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(528, 28);
+            textBox2.TabIndex = 5;
+            textBox2.Text = "The 'better' Breath of the Wild Multiplayer Autoupdater";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(721, 598);
+            Controls.Add(textBox2);
             Controls.Add(progressBarDownload);
             Controls.Add(labelStatus);
             Controls.Add(buttonDownload);
@@ -97,5 +108,6 @@
         private Label labelStatus;
         private TextBox textBox1;
         private ProgressBar progressBarDownload;
+        private TextBox textBox2;
     }
 }
