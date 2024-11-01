@@ -18,7 +18,7 @@ class Program
 
         Console.WriteLine("*************************************************************************");
         Console.WriteLine("*        The 'better' Breath of the Wild Multiplayer Autoupdater        *");
-        Console.WriteLine("*  Built from the ground up Wesley Hellewell released on Oct 11th 2024  *");
+        Console.WriteLine("* Made from the ground up by Wesley Hellewell released on Oct 11th 2024 *");
         //Console.WriteLine("*                     Forked by *insert name here                       *");
         Console.WriteLine("*      This auto updater will prepare the mod installation for you      *");
         Console.WriteLine("*          Please do not close this installer until it is done          *");
