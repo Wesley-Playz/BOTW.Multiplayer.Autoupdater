@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.IO.Compression;
@@ -15,13 +15,13 @@ class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine("*************************************************************************");
-        Console.WriteLine("*        The 'better' Breath of the Wild Multiplayer Autoupdater        *");
-        Console.WriteLine("*    Made from scratch by Wesley Hellewell released on Oct 11th 2024    *");
-        //Console.WriteLine("*                     Forked by *insert name here                       *");
-        Console.WriteLine("*      This auto updater will prepare the mod installation for you      *");
-        Console.WriteLine("*          Please do not close this installer until it is done          *");
-        Console.WriteLine("*************************************************************************\n");
+        Console.WriteLine("***********************************************************************");
+        Console.WriteLine("*       The 'better' Breath of the Wild Multiplayer Autoupdater       *");
+        Console.WriteLine("*Made from the ground up by Wesley Hellewell released on Oct 11th 2024*");
+        //Console.WriteLine("*                    Forked by *insert name here                      *");
+        Console.WriteLine("*     This auto updater will prepare the mod installation for you     *");
+        Console.WriteLine("*         Please do NOT close this installer until it is done         *");
+        Console.WriteLine("***********************************************************************\n");
 
         if (ContainsOtherFilesOrFolders())
         {
@@ -94,8 +94,6 @@ class Program
             "Breath of the Wild Multiplayer.runtimeconfig.json",
             "Newtonsoft.Json.dll",
             "Version.txt",
-            //Linux
-            "BOTWM_Autoupdater",
 			//Old Version
 			".gitignore",
             "BOTW Multiplayer.exe",
