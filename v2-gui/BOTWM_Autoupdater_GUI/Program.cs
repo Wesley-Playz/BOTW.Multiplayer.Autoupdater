@@ -1,17 +1,22 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BotWMultiplayerUpdaterGUI
 {
     static class Program
     {
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDpiAwarenessContext(int dpiFlag);
+
         [STAThread]
         static void Main()
         {
-            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2); // Per-monitor DPI awareness
+            SetProcessDpiAwarenessContext(-4); // -4 corresponds to Per-Monitor V2 DPI awareness
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2); // for .NET Core / .NET 5+ projects
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1()); // Ensure Form1 is referenced here
+            Application.Run(new Form1());
         }
     }
 }

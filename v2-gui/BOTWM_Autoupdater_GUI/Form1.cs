@@ -86,11 +86,13 @@ namespace BotWMultiplayerUpdaterGUI
         public Form1()
         {
             InitializeComponent();
-            this.ClientSize = new Size(721, 598); // Adjust the size as needed
-            this.Size = new Size(721, 598); // Adjust the size as needed
+            this.ClientSize = new Size(742, 662); // Adjust the size as needed
+            this.Size = new Size(742, 662); // Adjust the size as needed
             this.FormBorderStyle = FormBorderStyle.FixedSingle; // Prevent resizing
             this.MaximizeBox = false; // Disable the maximize button
-            this.AutoScaleMode = AutoScaleMode.Dpi;
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             LoadVersions();
             AutoCheckForUpdates();
 
@@ -104,11 +106,11 @@ namespace BotWMultiplayerUpdaterGUI
             darkModeCheckbox.CheckedChanged += DarkModeCheckbox_CheckedChanged; // Add event handler
             this.Controls.Add(darkModeCheckbox); // Add checkbox to the form
 
-            // Add button to run exe and exit
+            // Add button to start multiplayer exe and exit
             Button runExeButton = new Button
             {
                 Text = "Start BOTW Multiplayer",
-                Location = new Point(218, 460), // Set an appropriate location
+                Location = new Point(240, 460), // Set an appropriate location
                 Size = new Size(262, 66) // Set the button size as needed
             };
             runExeButton.Click += runExeButton_Click; // Attach the click event handler
