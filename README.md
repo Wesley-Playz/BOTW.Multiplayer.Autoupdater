@@ -13,7 +13,9 @@ v2: Allows you to choose between the latest and any version available.
 v2-python: v2 remade in Python.
 
 v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download). Also alerts you (when you open the program) if there is a new version available and allows you to download it.
+
 ![picture](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/GUI.png)
+
 The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
 
 Watch this video to get BotW Multiplayer set up and working: https://www.youtube.com/watch?v=j18yicimeiM
