@@ -87,8 +87,10 @@ namespace BotWMultiplayerUpdaterGUI
         {
             InitializeComponent();
             this.ClientSize = new Size(721, 598); // Adjust the size as needed
+            this.Size = new Size(721, 598); // Adjust the size as needed
             this.FormBorderStyle = FormBorderStyle.FixedSingle; // Prevent resizing
             this.MaximizeBox = false; // Disable the maximize button
+            this.AutoScaleMode = AutoScaleMode.Dpi;
             LoadVersions();
             AutoCheckForUpdates();
 
