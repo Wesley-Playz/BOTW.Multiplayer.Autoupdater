@@ -8,9 +8,15 @@ If you download the Python version you need to have Python installed on your sys
 
 v1: Downloads the latest release.
 
+![picture](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/v1.png)
+
 v2: Allows you to choose between the latest and any version available.
 
+![picture](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/v2.png)
+
 v2-python: v2 remade in Python.
+
+![picture](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/Python.png)
 
 v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest version to download). Also alerts you (when you open the program) if there is a new version available and allows you to download it.
 
