@@ -30,6 +30,8 @@ If you want to build v1, v2, or v2-python yourself I would recommend editing the
 
 If you want to build v2-gui yourself I would recommend editing the program in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: `dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeAllContentForSelfExtract=true`.
 
+&emsp;
+
 Note: You WILL NEED the [Newtonsoft.Json](https://www.nuget.org/packages/newtonsoft.json) (all versions), and [Costura.Fody](https://www.nuget.org/packages/Costura.Fody) (all versions except for v2-gui) NuGet packages in order for the program to work.
 
 If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
