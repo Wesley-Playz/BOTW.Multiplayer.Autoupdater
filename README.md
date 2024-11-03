@@ -22,15 +22,15 @@ v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest ver
 
 ![version 2 with a gui](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/GUI.png)
 
-The autoupdater downloads the files from this repository: https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release
+The autoupdater downloads the files from [this repository](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release).
 
-Watch this video to get BotW Multiplayer set up and working: https://www.youtube.com/watch?v=j18yicimeiM
+Watch [this video](https://www.youtube.com/watch?v=j18yicimeiM) to get BotW Multiplayer set up and working.
 
-If you want to build v1, v2, or v2-python yourself I would recommend editing the files in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: `dotnet publish -r win-x64 --self-contained -p:PublishSingleFile=true -c Release`
+If you want to build v1, v2, or v2-python yourself I would recommend editing the files in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: `dotnet publish -r win-x64 --self-contained -p:PublishSingleFile=true -c Release`.
 
-If you want to build v2-gui yourself I would recommend editing the program in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: `dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeAllContentForSelfExtract=true`
+If you want to build v2-gui yourself I would recommend editing the program in Visual Studio 2022 then running CMD in the project folder (the one with the sln file) and running this command: `dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeAllContentForSelfExtract=true`.
 
-Note: You WILL NEED the Newtonsoft.Json (all versions), and Costura.Fody (all versions except for v2-gui) NuGet packages in order for the program to work.
+Note: You WILL NEED the [Newtonsoft.Json](https://www.nuget.org/packages/newtonsoft.json) (all versions), and [Costura.Fody](https://www.nuget.org/packages/Costura.Fody) (all versions except for v2-gui) NuGet packages in order for the program to work.
 
 If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
 There is a "forked by *insert name here*" in the code for a reason. Just use it.
