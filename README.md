@@ -34,7 +34,7 @@ If you want to build v2-gui yourself I would recommend editing the program in Vi
 
 &nbsp;
 
-NOTE: You WILL NEED the [Newtonsoft.Json](https://www.nuget.org/packages/newtonsoft.json) (all versions), and [Costura.Fody](https://www.nuget.org/packages/Costura.Fody) (all versions except for v2-gui) NuGet packages in order for the program to work.
+NOTE: You WILL NEED the [Newtonsoft.Json](https://www.nuget.org/packages/newtonsoft.json) (all versions), and [Costura.Fody](https://www.nuget.org/packages/Costura.Fody) (v1 and v2) NuGet packages in order for the program to work.
 
 NOTE: If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
 There is a "forked by *insert name here*" in the code for a reason. Just use it.
