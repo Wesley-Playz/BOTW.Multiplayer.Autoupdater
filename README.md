@@ -6,7 +6,7 @@ Just download one of the releases and run the program in an empty folder.
 
 &nbsp;
 
-If you download the Python version you need to have Python installed on your system to run it. On Linux just open a terminal and run: `sudo apt install python3` then run: `python BOTWM_Autoupdater_Python.py` in the directory where BOTWM_Autoupdater_Python.py was saved to.
+If you download the Python version you need to have Python installed on your system to run it. On Linux just open a terminal and run: `sudo apt install python3` then run: `python BOTWM_Autoupdater_Python.py` in the directory where BOTWM_Autoupdater_Python.py was saved to. (This will make more sense when the mod goes open source and someone makes a version for Linux/MacOS nativly (it could be me)).
 
 &nbsp;
 
