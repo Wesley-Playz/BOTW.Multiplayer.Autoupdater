@@ -6,7 +6,7 @@ Just download one of the releases and run the program in an empty folder.
 
 &nbsp;
 
-If you download the Python version you need to have Python installed on your system to run it. On Linux just open a terminal and run: `sudo apt install python3` then run: `python3 BOTWM_Autoupdater_Python.py` in the directory where BOTWM_Autoupdater_Python.py was saved to. (This will make more sense when the mod goes open source and someone makes a version for Linux/MacOS nativly (it could be me)).
+If you download the Python version you need to have Python installed on your system to run it. On Linux just open a terminal and run: `sudo apt install python3` then run: `python3 BOTWM_Autoupdater_Python.py` in the directory where BOTWM_Autoupdater_Python.py was saved to. (This will make more sense when my Linux Port is done).
 
 &nbsp;
 
@@ -26,6 +26,10 @@ v2-gui: v2 remade with a GUI (only has all versions/can't just choose latest ver
 
 ![version 2 with a gui](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/GUI.png)
 
+v3-gui: v3 with a GUI. Works with version 2 of the multiplayer mod. Only has all versions/can't just choose latest version to download. Also alerts you (when you open the program) if there is a new version available and allows you to download it.
+
+![version 3 with a gui](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Autoupdater/raw/branch/main/images/GUI-v3.png)
+
 The autoupdater downloads the files from [this repository](https://gitea.30-seven.cc/Wesley/BotW.Multiplayer.Release).
 
 Watch [this video](https://www.youtube.com/watch?v=j18yicimeiM) to get BotW Multiplayer set up and working.
@@ -41,4 +45,4 @@ NOTE: You WILL NEED the [Newtonsoft.Json](https://www.nuget.org/packages/newtons
 NOTE: If you edit the source code and release is publicly you need to give credit to me (it is already right there in the code).
 There is a "forked by *insert name here*" in the code for a reason. Just use it.
 
-NOTE: If you edit the v2-gui source code and release it publicly you need to give credit to me (just add *forked by ____* in the textbox in the designer).
+NOTE: If you edit the v2-gui or v3-gui source code and release it publicly you need to give credit to me (just add *forked by ____* in the textbox in the designer).
